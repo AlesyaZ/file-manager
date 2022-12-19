@@ -9,5 +9,9 @@ export default async function rm(file) {
     pathAbsl = join(file);
   }
 
-  await remove(pathAbsl);
+  try {
+    await remove(pathAbsl);
+  } catch (err) {
+    if (err) console.log("Operation failed!");
+  }
 }
