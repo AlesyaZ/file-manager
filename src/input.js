@@ -9,6 +9,7 @@ import rm from "./operations/basic/rm.js";
 import cat from "./operations/basic/cat.js";
 import osValue from "./operations/systemInfo/index.js";
 import { compress } from "./operations/zip/compress.js";
+import { decompress } from "./operations/zip/decompress.js";
 import { calculateHash } from "./operations/hash.js";
 import { ERROR_OPERATION, MESSAGE_INVALID } from "./constants.js";
 
@@ -94,12 +95,11 @@ export const enterOperations = async (data) => {
       enterDirectory();
       break;
     }
-
-    // case "decompress": {
-    //   decompress(enterText[1], enterText[2]);
-    //   break;
-    // }
-
+    case "decompress": {
+      await decompress(enterText[1], enterText[2]);
+      enterDirectory();
+      break;
+    }
     default: {
       console.log(ERROR_OPERATION);
       enterDirectory();

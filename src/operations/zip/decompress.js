@@ -15,17 +15,17 @@ export function checkPath(pathFile) {
   }
 }
 
-export const compress = async (pathFile, pathZip) => {
+export const decompress = async (pathZip, pathFile) => {
   const pipe = util.promisify(pipeline);
   checkPath(pathZip);
   checkPath(pathFile);
-  const fileName = parse(pathFile).base;
-  const destinationPath = resolve(`${pathZip}${sep}${fileName}.br`);
+  const fileName = parse(pathZip).name;
+  const destinationPath = resolve(`${pathFile}${sep}${fileName}`);
 
   try {
     await pipe(
-      fs.createReadStream(pathFile),
-      zlib.createBrotliCompress(),
+      fs.createReadStream(pathZip),
+      zlib.createBrotliDecompress(),
       fs.createWriteStream(destinationPath)
     );
   } catch (err) {
