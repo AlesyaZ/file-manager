@@ -1,21 +1,16 @@
-import os from "node:os";
-import up from "./src/operations/nwd/up.js";
-import cd from "./src/operations/nwd/cd.js";
-import { calculateHash } from "./src/operations/hash.js";
+import os from "os";
+import { enterDirectory, enterOperations } from "./src/input.js";
 import { ERROR_OPERATION } from "./src/constants.js";
 
-const { stdin, stdout, stderr, argv, cwd } = process;
+const { stdin, stdout, stderr, argv } = process;
 
 const prefix = "--username=";
 const dataArgv = argv.slice(2).toString();
 let userName = dataArgv.replace(/--username=/g, "");
 
-const enterDirectory = () => {
-  stdout.write(`You are currently in ${cwd()} \n`);
-};
 try {
   if (!dataArgv.startsWith(prefix)) {
-    throw new Error("Invalid data");
+    throw new Error("Invalid input");
   }
   stdout.write(`Welcome to the File Manager, ${userName}! \n`);
   process.chdir(os.homedir());
@@ -36,31 +31,7 @@ process.on("SIGINT", () => {
 });
 
 stdin.on("data", async (data) => {
-  const enterText = data.toString().trim().split(" ");
-  switch (enterText[0]) {
-    case ".exit": {
-      exitManager(userName);
-      break;
-    }
-    case "up": {
-      up(enterText.toString());
-      enterDirectory();
-      break;
-    }
-    case "cd": {
-      cd(enterText[1]);
-      break;
-    }
-    case "hash": {
-      try {
-        calculateHash(enterText[1]);
-        enterDirectory();
-      } catch {
-        stdout.write(ERROR_OPERATION);
-      }
-      break;
-    }
-  }
+  enterOperations(data);
 });
 
 process.on("error", (err) => {
