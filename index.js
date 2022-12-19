@@ -1,7 +1,8 @@
 import os from "node:os";
 import up from "./src/operations/nwd/up.js";
 import cd from "./src/operations/nwd/cd.js";
-// import { calculateHash } from "./src/operations/hash.js";
+import { calculateHash } from "./src/operations/hash.js";
+import { ERROR_OPERATION } from "./src/constants.js";
 
 const { stdin, stdout, stderr, argv, cwd } = process;
 
@@ -50,14 +51,18 @@ stdin.on("data", async (data) => {
       cd(enterText[1]);
       break;
     }
-    // case "hash": {
-    //   calculateHash(enterText[1]);
-    //   enterDirectory();
-    //   break;
-    // }
+    case "hash": {
+      try {
+        calculateHash(enterText[1]);
+        enterDirectory();
+      } catch {
+        stdout.write(ERROR_OPERATION);
+      }
+      break;
+    }
   }
 });
 
 process.on("error", (err) => {
-  console.log(err.message);
+  if (err) stderr.write(ERROR_OPERATION);
 });
