@@ -2,8 +2,10 @@ import up from "./operations/nwd/up.js";
 import cd from "./operations/nwd/cd.js";
 import ls from "./operations/nwd/ls.js";
 import add from "./operations/basic/add.js";
+import rn from "./operations/basic/rn.js";
 import { cat } from "./operations/basic/cat.js";
 import { calculateHash } from "./operations/hash.js";
+import { ERROR_OPERATION, MESSAGE_INVALID } from "./constants.js";
 
 const { stdout, cwd } = process;
 
@@ -38,7 +40,16 @@ export const enterOperations = (data) => {
     //   break;
     // }
     case "add": {
+      if (enterText.length > 2) {
+        console.log(MESSAGE_INVALID);
+        return enterDirectory();
+      }
       add(enterText[1]);
+    }
+    case "rn": {
+      rn(enterText[1], enterText[2]);
+      enterDirectory();
+      break;
     }
     case "hash": {
       try {
