@@ -89,5 +89,20 @@ export const enterOperations = async (data) => {
       enterDirectory();
       break;
     }
+    case "compress": {
+      await compress(enterText[1], enterText[2]);
+      enterDirectory();
+      break;
+    }
+
+    // case "decompress": {
+    //   decompress(enterText[1], enterText[2]);
+    //   break;
+    // }
+
+    default: {
+      console.log(ERROR_OPERATION);
+      enterDirectory();
+    }
   }
 };
