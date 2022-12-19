@@ -95,12 +95,20 @@ export const enterOperations = async (data) => {
       break;
     }
     case "compress": {
-      await compress(enterText[1], enterText[2]);
+      if (enterText.length === 3) {
+        await compress(enterText[1], enterText[2]);
+      } else {
+        stdout.write(`${MESSAGE_INVALID} \n`);
+      }
       enterDirectory();
       break;
     }
     case "decompress": {
-      await decompress(enterText[1], enterText[2]);
+      if (enterText.length === 3) {
+        await decompress(enterText[1], enterText[2]);
+      } else {
+        stdout.write(`${MESSAGE_INVALID} \n`);
+      }
       enterDirectory();
       break;
     }
