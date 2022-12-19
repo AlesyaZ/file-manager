@@ -2,7 +2,7 @@ import up from "./operations/nwd/up.js";
 import cd from "./operations/nwd/cd.js";
 import ls from "./operations/nwd/ls.js";
 import { add } from "./operations/basic/add.js";
-import cp from "./operations/basic/cp.js";
+import { cp } from "./operations/basic/cp.js";
 import { rn } from "./operations/basic/rn.js";
 import { mv } from "./operations/basic/mv.js";
 import rm from "./operations/basic/rm.js";
@@ -82,9 +82,8 @@ export const enterOperations = async (data) => {
       try {
         await calculateHash(enterText[1]);
       } catch {
-        stdout.write(MESSAGE_INVALID);
+        stdout.write(ERROR_OPERATION);
       }
-      enterDirectory();
       break;
     }
     case "compress": {
@@ -98,7 +97,7 @@ export const enterOperations = async (data) => {
       break;
     }
     default: {
-      console.log(ERROR_OPERATION);
+      console.log(MESSAGE_INVALID);
       enterDirectory();
     }
   }
