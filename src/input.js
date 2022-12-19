@@ -32,11 +32,11 @@ export const enterOperations = (data) => {
       cd(enterText[1]);
       break;
     }
-    // case "ls": {
-    //   ls(enterText.toString());
-    //   enterDirectory();
-    //   break;
-    // }
+    case "ls": {
+      ls(enterText.toString());
+      enterDirectory();
+      break;
+    }
     // case "cat": {
     //   cat(enterText[1]);
     //   enterDirectory();
