@@ -2,6 +2,7 @@ import up from "./operations/nwd/up.js";
 import cd from "./operations/nwd/cd.js";
 import ls from "./operations/nwd/ls.js";
 import add from "./operations/basic/add.js";
+import cp from "./operations/basic/cp.js";
 import rn from "./operations/basic/rn.js";
 import { cat } from "./operations/basic/cat.js";
 import { calculateHash } from "./operations/hash.js";
@@ -48,6 +49,11 @@ export const enterOperations = (data) => {
     }
     case "rn": {
       rn(enterText[1], enterText[2]);
+      enterDirectory();
+      break;
+    }
+    case "cp": {
+      cp(enterText[1], enterText[2]);
       enterDirectory();
       break;
     }
