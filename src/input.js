@@ -55,12 +55,20 @@ export const enterOperations = async (data) => {
       break;
     }
     case "cp": {
-      await cp(enterText[1], enterText[2]);
+      if (enterText.length === 3) {
+        await cp(enterText[1], enterText[2]);
+      } else {
+        stdout.write(`${MESSAGE_INVALID} \n`);
+      }
       enterDirectory();
       break;
     }
     case "mv": {
-      await mv(enterText[1], enterText[2]);
+      if (enterText.length === 3) {
+        await mv(enterText[1], enterText[2]);
+      } else {
+        stdout.write(`${MESSAGE_INVALID} \n`);
+      }
       enterDirectory();
       break;
     }

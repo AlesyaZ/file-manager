@@ -1,34 +1,54 @@
-import { resolve } from "path";
+import path from "path";
 import { createReadStream, createWriteStream } from "fs";
+import { rm as remove } from "fs/promises";
 import { ERROR_OPERATION, MESSAGE_INVALID } from "../../constants.js";
-import rm from "./rm.js";
+
+export function checkPath(pathFile) {
+  if (pathFile === path.isAbsolute(pathFile)) {
+    return pathFile;
+  } else {
+    path.join(process.cwd(), pathFile);
+  }
+}
 
 export const mv = async (file, pathFile) => {
-  let fileName = file.replace(/\\/g, "/").split("/").at(-1);
+  checkPath(file);
+  checkPath(pathFile);
+  const fileName = path.parse(file).base;
+  try {
+    if (file && pathFile) {
+      const read = await createReadStream(file);
+      const write = await createWriteStream(
+        `${pathFile}${path.sep}${fileName}`,
+        { flags: "wx" }
+      );
 
-  if (!pathFile || !file) {
-    console.log(MESSAGE_INVALID);
-  }
+      write.write("");
 
-  const read = await createReadStream(resolve(file));
-  const write = await createWriteStream(resolve(pathFile, fileName));
+      write.on("error", () => {
+        console.log(ERROR_OPERATION);
+      });
 
-  write.write("");
+      read.on("data", (chunk) => {
+        try {
+          write.write(chunk);
+        } catch (err) {
+          console.log(ERROR_OPERATION);
+        }
+      });
 
-  write.on("error", () => {
-    console.log(ERROR_OPERATION);
-  });
+      read.on("error", () => {
+        console.log(ERROR_OPERATION);
+      });
 
-  read.on("data", (chunk) => {
-    try {
-      write.write(chunk);
-    } catch (err) {
-      console.log(ERROR_OPERATION);
+      read.on("end", async () => {
+        remove(file);
+        write.end();
+      });
+    } else {
+      console.log(MESSAGE_INVALID);
     }
-  });
-
-  read.on("end", async () => {
-    write.end();
-    rm(file);
-  });
+  } catch (err) {
+    if (err) console.log(MESSAGE_INVALID);
+  }
 };
