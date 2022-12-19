@@ -7,6 +7,7 @@ import rn from "./operations/basic/rn.js";
 import mv from "./operations/basic/mv.js";
 import rm from "./operations/basic/rm.js";
 import cat from "./operations/basic/cat.js";
+import osValue from "./operations/systemInfo/index.js";
 import { calculateHash } from "./operations/hash.js";
 import { ERROR_OPERATION, MESSAGE_INVALID } from "./constants.js";
 
@@ -66,6 +67,15 @@ export const enterOperations = async (data) => {
     }
     case "rm": {
       rm(enterText[1]);
+      enterDirectory();
+      break;
+    }
+    case "os": {
+      if (enterText.length === 2) {
+        osValue(enterText[1]);
+      } else {
+        stdout.write(`${MESSAGE_INVALID} \n`);
+      }
       enterDirectory();
       break;
     }
