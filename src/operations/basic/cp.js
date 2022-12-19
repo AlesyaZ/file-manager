@@ -1,7 +1,7 @@
 import { resolve } from "path";
 import { createReadStream, createWriteStream } from "fs";
 
-export default function cp(file, pathCpFile) {
+export default async function cp(file, pathCpFile) {
   let fileName = file.replace(/\\/g, "/").split("/").at(-1);
 
   if (!pathCpFile || !file) {

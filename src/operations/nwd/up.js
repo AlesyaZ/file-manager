@@ -7,7 +7,7 @@ const { cwd } = process;
 let currentPath = cwd();
 const root = path.parse(homedir());
 
-const up = (input) => {
+const up = async (input) => {
   if (input !== "up") {
     return console.log(MESSAGE_INVALID);
   } else if (root === cwd()) {

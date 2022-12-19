@@ -1,7 +1,7 @@
 import { rename } from "fs/promises";
 import path from "path";
 
-export default function rn(pathFile, nameFile) {
+export default async function rn(pathFile, nameFile) {
   try {
     if (!pathFile || !nameFile) {
       return "Invalid input";

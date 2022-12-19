@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 
-export default function add(fileCreate) {
+export default async function add(fileCreate) {
   if (!fileCreate) {
     return;
   }

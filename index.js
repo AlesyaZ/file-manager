@@ -15,7 +15,6 @@ try {
   stdout.write(`Welcome to the File Manager, ${userName}! \n`);
   process.chdir(os.homedir());
   enterDirectory();
-  //operations
 } catch (err) {
   if (err) stderr.write("Invalid input!");
   process.exit();

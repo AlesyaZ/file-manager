@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 
 export const hash = "SHA256";
 
-export const calculateHash = (file) => {
+export const calculateHash = async (file) => {
   try {
     const fileText = fs.createReadStream(file, { encoding: "utf8" });
     fileText.on("data", (data) => {
