@@ -4,6 +4,8 @@ import ls from "./operations/nwd/ls.js";
 import add from "./operations/basic/add.js";
 import cp from "./operations/basic/cp.js";
 import rn from "./operations/basic/rn.js";
+import mv from "./operations/basic/mv.js";
+import rm from "./operations/basic/rm.js";
 import { cat } from "./operations/basic/cat.js";
 import { calculateHash } from "./operations/hash.js";
 import { ERROR_OPERATION, MESSAGE_INVALID } from "./constants.js";
@@ -54,6 +56,16 @@ export const enterOperations = (data) => {
     }
     case "cp": {
       cp(enterText[1], enterText[2]);
+      enterDirectory();
+      break;
+    }
+    case "mv": {
+      mv(enterText[1], enterText[2]);
+      enterDirectory();
+      break;
+    }
+    case "rm": {
+      rm(enterText[1]);
       enterDirectory();
       break;
     }

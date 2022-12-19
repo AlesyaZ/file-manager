@@ -1,15 +1,17 @@
 import { resolve } from "path";
 import { createReadStream, createWriteStream } from "fs";
+import { ERROR_OPERATION } from "../../constants.js";
+import rm from "./rm.js";
 
-export default function cp(file, pathCpFile) {
+export default async function mv(file, pathFile) {
   let fileName = file.replace(/\\/g, "/").split("/").at(-1);
 
-  if (!pathCpFile || !file) {
-    console.log("Invalid input");
+  if (!pathFile || !file) {
+    console.log(ERROR_OPERATION);
   }
 
   const read = createReadStream(resolve(file));
-  const write = createWriteStream(resolve(pathCpFile, fileName));
+  const write = createWriteStream(resolve(pathFile, fileName));
 
   write.write("");
 
@@ -27,5 +29,6 @@ export default function cp(file, pathCpFile) {
 
   read.on("end", async () => {
     write.end();
+    rm(file);
   });
 }
