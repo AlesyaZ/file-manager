@@ -1,5 +1,6 @@
 import path from "path";
 import { createReadStream } from "fs";
+import { enterDirectory } from "../../input.js";
 import { ERROR_OPERATION } from "../../constants.js";
 
 export default async function cat(file) {
@@ -16,9 +17,9 @@ export default async function cat(file) {
     data.on("data", function (chunk) {
       console.log(chunk.toString());
     });
-    data.on("close", () => process.cwd());
+    data.on("close", () => enterDirectory());
     data.on("error", () => console.log(ERROR_OPERATION));
-  } catch {
-    console.log(ERROR_OPERATION);
+  } catch (err) {
+    if (err) stderr.write(ERROR_OPERATION);
   }
 }

@@ -5,7 +5,7 @@ export const hash = "SHA256";
 
 export const calculateHash = async (file) => {
   try {
-    const fileText = fs.createReadStream(file, { encoding: "utf8" });
+    const fileText = await fs.createReadStream(file, { encoding: "utf8" });
     fileText.on("data", (data) => {
       console.log(createHash(hash).update(data).digest("hex"));
     });

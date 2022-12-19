@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { MESSAGE_INVALID } from "../../constants.js";
+import { ERROR_OPERATION } from "../../constants.js";
 
 const { stderr, cwd } = process;
 
@@ -22,7 +22,7 @@ export const add = async (fileCreate) => {
     await fs.writeFile(`${cwd()}${path.sep}${fileCreate}`, "");
   } catch (err) {
     if (err) {
-      stderr.write(`${MESSAGE_INVALID} \n`);
+      stderr.write(ERROR_OPERATION);
     }
   }
 };

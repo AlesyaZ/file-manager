@@ -6,7 +6,7 @@ const { stdin, stdout, stderr, argv } = process;
 
 const prefix = "--username=";
 const dataArgv = argv.slice(2).toString();
-let userName = dataArgv.replace(/--username=/g, "");
+export let userName = dataArgv.replace(/--username=/g, "");
 
 try {
   if (!dataArgv.startsWith(prefix)) {
@@ -20,7 +20,7 @@ try {
   process.exit();
 }
 
-const exitManager = (name) => {
+export const exitManager = (name) => {
   console.log(`Thank you for using File Manager, ${name}, goodbye!`);
   process.exit();
 };

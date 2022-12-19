@@ -1,16 +1,17 @@
 import up from "./operations/nwd/up.js";
 import cd from "./operations/nwd/cd.js";
 import ls from "./operations/nwd/ls.js";
-import add from "./operations/basic/add.js";
+import { add } from "./operations/basic/add.js";
 import cp from "./operations/basic/cp.js";
-import rn from "./operations/basic/rn.js";
-import mv from "./operations/basic/mv.js";
+import { rn } from "./operations/basic/rn.js";
+import { mv } from "./operations/basic/mv.js";
 import rm from "./operations/basic/rm.js";
 import cat from "./operations/basic/cat.js";
 import osValue from "./operations/systemInfo/index.js";
 import { compress } from "./operations/zip/compress.js";
 import { decompress } from "./operations/zip/decompress.js";
 import { calculateHash } from "./operations/hash.js";
+import { exitManager, userName } from "../index.js";
 import { ERROR_OPERATION, MESSAGE_INVALID } from "./constants.js";
 
 const { stdout, cwd } = process;
@@ -23,7 +24,7 @@ export const enterOperations = async (data) => {
   const enterText = data.toString().trim().split(" ");
   switch (enterText[0]) {
     case ".exit": {
-      await exitManager(userName);
+      exitManager(userName);
       break;
     }
     case "up": {
@@ -42,15 +43,11 @@ export const enterOperations = async (data) => {
     }
     case "cat": {
       await cat(enterText[1]);
-      enterDirectory();
       break;
     }
     case "add": {
-      if (enterText.length > 2) {
-        console.log(MESSAGE_INVALID);
-        return enterDirectory();
-      }
       await add(enterText[1]);
+      return enterDirectory();
     }
     case "rn": {
       await rn(enterText[1], enterText[2]);

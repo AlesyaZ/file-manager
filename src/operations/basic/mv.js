@@ -1,29 +1,29 @@
 import { resolve } from "path";
 import { createReadStream, createWriteStream } from "fs";
-import { ERROR_OPERATION } from "../../constants.js";
+import { ERROR_OPERATION, MESSAGE_INVALID } from "../../constants.js";
 import rm from "./rm.js";
 
-export default async function mv(file, pathFile) {
+export const mv = async (file, pathFile) => {
   let fileName = file.replace(/\\/g, "/").split("/").at(-1);
 
   if (!pathFile || !file) {
-    console.log(ERROR_OPERATION);
+    console.log(MESSAGE_INVALID);
   }
 
-  const read = createReadStream(resolve(file));
-  const write = createWriteStream(resolve(pathFile, fileName));
+  const read = await createReadStream(resolve(file));
+  const write = await createWriteStream(resolve(pathFile, fileName));
 
   write.write("");
 
   write.on("error", () => {
-    console.log("Invalid input");
+    console.log(ERROR_OPERATION);
   });
 
   read.on("data", (chunk) => {
     try {
       write.write(chunk);
     } catch (err) {
-      console.log("Invalid input");
+      console.log(ERROR_OPERATION);
     }
   });
 
@@ -31,4 +31,4 @@ export default async function mv(file, pathFile) {
     write.end();
     rm(file);
   });
-}
+};
