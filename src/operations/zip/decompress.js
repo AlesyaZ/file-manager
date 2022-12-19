@@ -3,7 +3,7 @@ import zlib from "zlib";
 import util from "util";
 import { pipeline } from "stream";
 import { isAbsolute, join, sep, parse, resolve } from "path";
-import { MESSAGE_INVALID } from "../../constants.js";
+import { ERROR_OPERATION } from "../../constants.js";
 
 const { stderr, cwd } = process;
 
@@ -29,6 +29,6 @@ export const decompress = async (pathZip, pathFile) => {
       fs.createWriteStream(destinationPath)
     );
   } catch (err) {
-    if (err) stderr.write(`${MESSAGE_INVALID} \n`);
+    if (err) stderr.write(ERROR_OPERATION);
   }
 };
